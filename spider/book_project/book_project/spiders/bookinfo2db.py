@@ -3,10 +3,18 @@ import scrapy
 import mysql.connector
 from book_project.items import BookItem
 
-class BookinfoSpider(scrapy.Spider):
-    name = "bookinfo"
+class Bookinfo2dbSpider(scrapy.Spider):
+    name = "bookinfo2db"
     allowed_domains = ["allitebooks.com","amazon.com"]
     start_urls = ['http://www.allitebooks.com/security/']
+
+    def execSQL(self, sql, data):
+        conn = mysql.connector.connect(user='root', password='root', database='testpy')
+        cursor = conn.cursor()
+        cursor.execute(sql, data)
+        conn.commit()
+        cursor.close()
+        conn.close()
 
     def parse(self, response):
         num_pages = int(response.xpath('//a[contains(@title, "Last Page →")]/text()').extract_first())
@@ -33,11 +41,13 @@ class BookinfoSpider(scrapy.Spider):
     def parse_price(self, response):
         item = response.meta['item']
         item['price'] = response.xpath('//span/text()').re(r'\$[0-9]+\.[0-9]{2}?')[0]
-        conn = mysql.connector.connect(user='root', password='root', database='testpy')
-        cursor = conn.cursor()
-        cursor.execute('insert into book (title,isbn,price) values (%s, %s, %s)', (item['title'], item['isbn'], item['price']))
-        cursor.close()
-        conn.close()
-        #yield item
+        title = item['title']
+        isbn = item['isbn']
+        price = item['price']
+        sql = "insert into book(title,isbn,price) values (%s, %s, %s)"
+        data=(title,isbn,price)
+        #sql = "insert into book (title,isbn,price) values('test','fsfs1231',12.12)"
+        self.execSQL(self, sql, data) 
+        yield item
 
 
