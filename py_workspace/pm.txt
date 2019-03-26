@@ -1,0 +1,328 @@
+1、System.arrayCopy(source,0,dest,0,x)：语句的意思就是：复制源数组从下标0开始的x个元素到目标数组，从目标数组的下标0所对应的位置开始存取；
+2、Arrays.sort(数组名)为数组排序的操作，但这个方法在java.util这个包里面，所以在用到的时候需要先将它导入；
+3、二分查找法
+package com.tu.test;
+/**
+ * 二分法查找
+ *
+ */
+public class BubbleTest {
+	public static void main(String[] args) {
+		int [] arrs = {1,2,3,4,5,6,7,8};
+		System.out.println(BubbleTest.sort(arrs, 5));
+	}
+	
+	public static int sort(int [] arrs,int value) {
+		int low = 0;
+		int high = arrs.length - 1;
+		
+		while (low <= high) {
+			int middle = (low + high) / 2;
+			if (arrs[middle] == value) {
+				return middle;
+			}
+			
+			if (arrs[middle] > value) {
+				high = middle - 1;
+			}
+			
+			if (arrs[middle] < value) {
+				low = middle + 1;
+			}
+		}
+		
+		return -1;
+	}
+}
+
+4、冒泡排序
+package com.tu.test;
+/**
+ * 冒泡排序
+ *
+ */
+public class SortTest {
+	public static void main(String[] args) {
+		int [] arrs = {1,23,2,54,4,99,100,3};
+		SortTest.sort(arrs);
+	}
+	
+	public static void sort(int [] arrs) {
+		System.out.println("=====排序前=====");
+		for (int i = 0;i < arrs.length; i++) {
+			System.out.println(arrs[i]);
+		}
+		
+		for (int i = 0; i < arrs.length; i++) {
+			for (int j = i + 1; j < arrs.length; j++) {
+				int temp = 0;
+				//交换位置
+				if (arrs[i] > arrs[j]) {
+					temp = arrs[i];
+					arrs[i] = arrs[j];
+					arrs[j] = temp;
+				}
+			}
+		}
+		
+		System.out.println("=====排序后=====");
+		for (int i = 0;i < arrs.length; i++) {
+			System.out.println(arrs[i]);
+		}
+	}
+}
+
+注：二分法查找仅针对有序数组，如果一个数组无序，结合冒泡排序，先使数组有序，再使用二分法进行元素查找！
+
+5、&和&&的区别
+作为逻辑运算符：&(不管左边是什么，右边都参与运算)，&&(如果左边为false，右边则不参与运算，短路)
+另外&可作为位运算符。
+
+6、方法重载
+方法名相同，参数个数、参数类型、参数顺序不同，和返回值类型无关。
+
+7、成员变量和静态变量
+a、成员变量所属于对象。所以也称为实例变量。
+静态变量所属于类。所以也称为类变量。
+b、成员变量存在于堆内存中。
+静态变量存在于方法区中。
+c、成员变量随着对象创建而存在。随着对象被回收而消失。
+静态变量随着类的加载而存在。随着类的消失而消失。
+d、成员变量只能被对象所调用 。
+静态变量可以被对象调用，也可以被类名调用。
+所以，成员变量可以称为对象的特有数据，静态变量称为对象的共享数据。
+
+8、抽象类
+类用abstract修饰，不能创建对象。抽象类中不一定有抽象方法，但是含有抽象方法的类一定是抽象类。
+
+
+9、抽象类和接口
+a、抽象类只能被继承，而且只能单继承。
+接口需要被实现，而且可以多实现。 
+b、抽象类中可以定义非抽象方法，子类可以直接继承使用。
+接口中都有抽象方法，需要子类去实现。
+c、抽象类使用的是  is a 关系。
+接口使用的 like a 关系。 
+d、抽象类的成员修饰符可以自定义。
+接口中的成员修饰符是固定的。全都是public的。
+
+10、多态
+多态存在的三个必要条件：要有继承；要有重写；父类引用指向子类对象。
+
+多态的实现方式：接口实现，继承父类进行方法重写，同一个类中进行方法重载。
+
+方法调用的优先级问题(由高到低)：this.show(O)、super.show(O)、this.show((super)O)、super.show((super)O)
+
+11、继承
+好处：提高了代码的复用性；让类和类之间有了关系，提供了多态的前提。
+为什么会有父类？多个类向上抽取出最基本最共性的内容，就形成了父类。
+什么时候使用继承？当类和类之间存在所属关系"is a"，并且在继承后，被继承的类中的所有功能，都能被子类使用。
+
+12、模板方法设计模式
+使用抽象类和抽象方法实现。
+
+13、Object类(java.lang.Object)
+比较两个对象相等(内存地址)：equals()方法
+对象变为字符串：toString()方法,返回的字符串格式：类名@哈希值 = getClass().getName() + "@" + Integer.toHexString(hasCode())
+字节码：getClass()
+获取对象的哈希码值：hasCode()
+
+14、反射
+什么是java反射？核心在于一个对动态二字的理解，即：在运行状态中，能动态获取类的属性和方法，以及动态调用对象的属性和方法。
+反射的作用：一方面用于反编译(.class到.java文件)，另一方面用来访问对象的属性、方法等。
+反射机制中主要的类：
+java.lang.Class;                
+java.lang.reflect.Constructor; 
+java.lang.reflect.Field;        
+java.lang.reflect.Method;
+java.lang.reflect.Modifier;
+
+15、动态代理
+怎么理解代理呢？我们在程序中为了提供额外的或不同的操作，插入的用来代替实际对象的对象，通常充当着中间人的角色。
+动态代理就是动态地创建代理并动态地处理对所代理方法的调用。
+所有调用都会被重定向到一个单一的调用处理器上(实现InvocationHandler接口)
+
+16、单点登录(SSO)
+什么是SSO?(Single Sign On)在多个应用系统中，用户只需要登录一次就能访问所有相互信任的应用系统。(如：阿里的登录系统，登录一次之后，可以访问邮箱、任务管理系统Aone、Bug管理系统K3等)。也就是各系统身份认证的整合。
+SSO带来的好处：只需登录一次带来了更好的用户体验，另外降低了安全的风险和管理的消耗。
+
+EAI(Enterprise Application Integration)：企业应用集成
+
+技术实现机制：我们知道，去景点游玩，每玩一个项目都需要购票，如果项目太多，每次买票是不是很麻烦？那么我们是不是可以只需要买一次票，就能玩遍所有的景点呢！
+
+要实现SSO需要实现的功能：
+所有应用系统共享一个身份认证系统
+所有应用系统能够识别和提取ticket信息
+
+使用cookie实现，在安全、功能以及性能方面的局限性：cookie的安全保护、认证方式的支持、资源访问过滤的性能等等。。。
+功能上、安全上、性能上需要不断探索。
+
+不同认证系统之间的通讯协议：SAML等
+数据库、LDAP等
+各种认证模式：数字证书、Radius、SafeWord、MemberShip、SecurID等，JAAS框架
+Agent机制
+
+一种全方位的SSO解决方案：Kerberos
+
+17、Session和Cookie
+session:在服务器端保持状态的一个方案，如果浏览器禁用掉了cookie，如何把session id传递回服务器？放到请求URL上或者隐藏在表单中。在请求过多的情况下，服务器端存放太多session id会造成性能的影响。一般存放登录信息等重要信息。
+
+cookie:在客户端保持状态的一个方案，存放在客户的浏览器中；如果不设置超时时间，关闭浏览器，cookie小时(会话cookie，保存在内存中)；如果设置超时时间，cookie被保存在硬盘。由于其存放在客户端，很容易被仿造，不安全。并且cookie的大小是有限制的，不能超过3K。一般存放有必要存储的非重要信息。
+
+
+
+
+
+18、异常
+java.lang.Throwable(Error和Exception)
+处理异常的两种方式：抛出(throws)和捕捉(try-catch)
+定义异常处理时，什么时候用try，什么时候用throws？功能内部如果能处理，就用try，如果不能处理就用throws，让调用方去处理。
+自定义异常：定义一个子类继承Exception或RuntimeException，使用throw或throws。
+不同之处：
+Exception：可以是被控制或不可被控制的；由程序员导致的错误；应该在程序中被处理；
+Error：总是不可控制的；经常用来表示系统错误或低层资源的错误；如果可能，应该在系统级进行处理；
+
+受检查异常(checked)和不受检查异常(unchecked)
+除了RuntimeException以外的,都是checked Exception
+
+最常用的几种RuntimeException：NullPointerExceptionextends；IndexOutOfBoundsException，ArrayIndexOutOfBoundsException，StringIndexOutOfBoundsException；IllegalArgumentException，NumberFormatException；ClassCastException；ArithmeticException
+
+异常处理就是为了把程序从异常中恢复出来。
+
+19、多线程
+进程：进行中的程序，其实就是一个应用程序运行时的内存分配空间。
+线程：进程中一个程序执行控制单元，一条执行路劲。
+那么什么是多线程应用程序呢？当一个进程中出现多个线程的时候。
+创建线程的第一种方式：继承Thread类，重写父类run方法，调用start()方法开启线程执行run()方法。
+创建线程的第二种方式：实现Runnable接口，覆盖run方法。
+
+同步机制解决线程安全问题。
+同步是隐式的所操作，而Lock是显式的锁操作。
+
+20、单例模式
+在应用程序中，保证一个类只有一个实例；要单例的类必须自行创建实例；自行向整个系统提供实例。
+方便控制实例的个数和节约系统资源。
+
+懒汉式
+饿汉式(类加载时就实例化了一个对象，我们需要考虑延迟，需要的时候再进行实例化)
+
+public class Singleton {
+    
+    private static final Singleton instance = new Singleton();
+    
+    private Singleton(){        
+    }
+    public Singleton getSingleton(){
+        return instance;
+    }
+}
+
+public class Singleton {
+
+    private static  Singleton instance = null;
+
+    private Singleton() {
+    }
+
+    public static synchronized Singleton getSingleton() {
+        if (instance == null) {
+            return new Singleton();
+        } else {
+            return instance;
+        }
+    }
+}
+
+减少了获取实例的开销
+class Single{
+	private static Single s = null;
+	private Single(){}
+	public static Single getInstance(){ //锁是谁？字节码文件对象；
+		if(s == null){
+			synchronized(Single.class){
+				if(s == null)
+					s = new Single();
+			}
+		}
+		return s;
+	}
+}
+
+21、API(Application Programming Interface，应用程序编程接口)
+一些预先等一的函数。
+
+22、String字符串
+字符串一旦被初始化，就不可以被改变，存放在方法区中的常量池中。
+
+23、集合框架
+
+24、Java线程池
+需要线程的时候，就创建一个线程，这样带来的问题是什么呢？频繁地创建和销毁线程需要时间。
+那么如何让线程复用呢？使用线程池。
+先准备好若干个线程等待执行任务，只要任务来了，存放线程的容器就是线程池，然后从池子拿出一个线程来让这个线程进行服务。
+好处是什么呢？对于大量的任务来说，节省资源，不用频繁的创建线程和销毁线程带来的资源消耗。
+>>>ThreadPoolExecutor类
+ThreadPoolExecutor extends AbstractExecutorService implements ExecutorService extends Executor
+几个核心的方法：
+execute()：向线程池提交一个任务，交由线程池去执行；
+submit()：用来向线程池提交任务，可返回执行结果；
+shutdown()：关闭线程池
+shutdownNow()：关闭线程池
+
+>>>实现原理
+1.线程池状态
+RUNNING、SHUTDOWN、STOP、TERMINATED
+2.任务的执行
+任务从提交到最终执行完毕经历了哪些过程？
+1）首先，要清楚corePoolSize和maximumPoolSize的含义；
+2）其次，要知道Worker是用来起到什么作用的；
+3）要知道任务提交给线程池之后的处理策略，这里总结一下主要有4点：
+
+如果当前线程池中的线程数目小于corePoolSize，则每来一个任务，就会创建一个线程去执行这个任务；
+如果当前线程池中的线程数目>=corePoolSize，则每来一个任务，会尝试将其添加到任务缓存队列当中，若添加成功，则该任务会等待空闲线程将其取出去执行；若添加失败（一般来说是任务缓存队列已满），则会尝试创建新的线程去执行这个任务；
+如果当前线程池中的线程数目达到maximumPoolSize，则会采取任务拒绝策略进行处理；
+如果线程池中的线程数量大于corePoolSize时，如果某线程空闲时间超过keepAliveTime，线程将被终止，直至线程池中的线程数目不大于corePoolSize；如果允许为核心池中的线程设置存活时间，那么核心池中的线程空闲时间超过keepAliveTime，线程也会被终止。
+
+3.线程池中的线程初始化
+默认情况下，创建线程池之后，线程池中是没有线程的，需要提交任务之后才会创建线程。
+
+
+4.任务缓存队列及排队策略
+workQueue
+workQueue的类型为BlockingQueue<Runnable>，通常可以取下面三种类型：
+1）ArrayBlockingQueue：基于数组的先进先出队列，此队列创建时必须指定大小；
+2）LinkedBlockingQueue：基于链表的先进先出队列，如果创建时没有指定此队列大小，则默认为Integer.MAX_VALUE；
+3）synchronousQueue：这个队列比较特殊，它不会保存提交的任务，而是将直接新建一个线程来执行新来的任务。
+
+5.任务拒绝策略
+当线程池的任务缓存队列已满并且线程池中的线程数目达到maximumPoolSize，如果还有任务到来就会采取任务拒绝策略，通常有以下四种策略：
+ThreadPoolExecutor.AbortPolicy:丢弃任务并抛出RejectedExecutionException异常。
+ThreadPoolExecutor.DiscardPolicy：也是丢弃任务，但是不抛出异常。
+ThreadPoolExecutor.DiscardOldestPolicy：丢弃队列最前面的任务，然后重新尝试执行任务（重复此过程）
+ThreadPoolExecutor.CallerRunsPolicy：由调用线程处理该任务
+
+6.线程池的关闭
+shutdown()：不会立即终止线程池，而是要等所有任务缓存队列中的任务都执行完后才终止，但再也不会接受新的任务
+shutdownNow()：立即终止线程池，并尝试打断正在执行的任务，并且清空任务缓存队列，返回尚未执行的任务
+
+7.线程池容量的动态调整
+setCorePoolSize：设置核心池大小
+setMaximumPoolSize：设置线程池最大能创建的线程数目大小
+
+>>>使用
+ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 200, TimeUnit.MILLISECONDS,new ArrayBlockingQueue<Runnable>(5));
+				 
+在java doc中，并不提倡我们直接使用ThreadPoolExecutor，而是使用Executors类中提供的几个静态方法来创建线程池：
+Executors.newCachedThreadPool();        //创建一个缓冲池，缓冲池容量大小为Integer.MAX_VALUE
+Executors.newSingleThreadExecutor();   //创建容量为1的缓冲池
+Executors.newFixedThreadPool(int);    //创建固定容量大小的缓冲池
+
+25、ECMAScript(ES6)
+一种标准，JavaScript为其的一种实现。
+
+26、栈和队列
+a、栈的创建(通过链表的方式)
+b、队列的创建(基于数组结构实现（顺序队列）、基于链表结构实现（链式队列）)
+
+
+34/67
